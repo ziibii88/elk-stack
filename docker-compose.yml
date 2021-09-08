@@ -40,6 +40,19 @@ services:
       - elasticsearch
     restart: unless-stopped
 
+  heartbeat:
+    image: docker.elastic.co/beats/heartbeat:7.14.1
+    container_name: heartbeat
+    environment:
+      SETUP_KIBANA_HOST: "kibana:5601"
+      ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
+    command: -e --strict.perms=false
+    volumes:
+      - ./heartbeat/heartbeat.yml:/usr/share/heartbeat/heartbeat.yml:ro
+    networks:
+      - elastic_net
+    restart: unless-stopped
+
 volumes:
   elastic_data:
     driver: local
