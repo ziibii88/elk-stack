@@ -46,12 +46,30 @@ services:
       - elasticsearch
     restart: unless-stopped
 
+  auditbeat:
+    image: docker.elastic.co/beats/auditbeat:7.14.1
+    container_name: auditbeat
+    cap_add:
+      - "AUDIT_CONTROL"
+      - "AUDIT_READ"
+#    command: -e --strict.perms=false -E setup.kibana=kibana:5601 -E output.elasticsearch.hosts=["elasticsearch:9200"]
+    command: -e --strict.perms=false
+    user: root
+    pid: host
+    volumes:
+      - ./auditbeat/auditbeat.yml:/usr/share/auditbeat/auditbeat.yml:ro
+    networks:
+      - elastic_net
+    depends_on:
+      - elasticsearch
+      - logstash
+      - kibana
+    restart: unless-stopped
+
   filebeat:
     image: docker.elastic.co/beats/filebeat:7.14.1
     container_name: filebeat
-    environment:
-      SETUP_KIBANA_HOST: "kibana:5601"
-      ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
+#    command: -e --strict.perms=false -E setup.kibana=kibana:5601 -E output.elasticsearch.hosts=["elasticsearch:9200"]
     command: -e --strict.perms=false
     user: root
     volumes:
@@ -70,9 +88,7 @@ services:
   heartbeat:
     image: docker.elastic.co/beats/heartbeat:7.14.1
     container_name: heartbeat
-    environment:
-      SETUP_KIBANA_HOST: "kibana:5601"
-      ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
+#    command: -e --strict.perms=false -E setup.kibana=kibana:5601 -E output.elasticsearch.hosts=["elasticsearch:9200"]
     command: -e --strict.perms=false
     volumes:
       - ./heartbeat/heartbeat.yml:/usr/share/heartbeat/heartbeat.yml:ro
@@ -80,15 +96,14 @@ services:
       - elastic_net
     depends_on:
       - elasticsearch
+      - logstash
       - kibana
     restart: unless-stopped
 
   metricbeat:
     image: docker.elastic.co/beats/metricbeat:7.14.1
     container_name: metricbeat
-    environment:
-      SETUP_KIBANA_HOST: "kibana:5601"
-      ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
+#    command: -e --strict.perms=false -E setup.kibana=kibana:5601 -E output.elasticsearch.hosts=["elasticsearch:9200"]
     command: -e --strict.perms=false
     user: root
     volumes:
@@ -101,6 +116,7 @@ services:
       - elastic_net
     depends_on:
       - elasticsearch
+      - logstash
       - kibana
     restart: unless-stopped
 
