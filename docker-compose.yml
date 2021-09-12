@@ -120,6 +120,23 @@ services:
       - kibana
     restart: unless-stopped
 
+  packetbeat:
+    image: docker.elastic.co/beats/packetbeat:7.14.1
+    container_name: packetbeat
+    cap_add:
+      - "NET_ADMIN"
+    #    command: -e --strict.perms=false -E setup.kibana=kibana:5601 -E output.elasticsearch.hosts=["elasticsearch:9200"]
+    command: -e --strict.perms=false
+    user: packetbeat
+    volumes:
+      - ./packetbeat/packetbeat.yml:/usr/share/packetbeat/packetbeat.yml:ro
+    network_mode: host
+    depends_on:
+      - elasticsearch
+      - logstash
+      - kibana
+    restart: unless-stopped
+
 volumes:
   elastic_data:
     driver: local
