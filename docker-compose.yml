@@ -12,6 +12,14 @@ services:
       memlock:
         soft: -1
         hard: -1
+    deploy:
+      resources:
+        limits:
+          cpus: 1
+          memory: 1G
+        reservations:
+          cpus: 0.25
+          memory: 256M
     volumes:
       - elastic_data:/usr/share/elasticsearch/data
     ports:
@@ -24,6 +32,14 @@ services:
   logstash:
     image: docker.elastic.co/logstash/logstash:7.14.1
     container_name: logstash
+    deploy:
+      resources:
+        limits:
+          cpus: 0.75
+          memory: 768M
+        reservations:
+          cpus: 0.25
+          memory: 256M
     volumes:
       - ./logstash/pipeline:/usr/share/logstash/pipeline
     ports:
@@ -38,6 +54,14 @@ services:
   kibana:
     image: docker.elastic.co/kibana/kibana:7.14.1
     container_name: kibana
+    deploy:
+      resources:
+        limits:
+          cpus: 0.5
+          memory: 512M
+        reservations:
+          cpus: 0.25
+          memory: 128M
     environment:
       ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
     ports:
