@@ -16,6 +16,11 @@ services:
         limits:
           cpus: 1
           memory: 1G
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"
     volumes:
       - elastic_data:/usr/share/elasticsearch/data
     ports:
@@ -33,6 +38,11 @@ services:
         limits:
           cpus: 0.75
           memory: 768M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"
     volumes:
       - ./logstash/pipeline:/usr/share/logstash/pipeline
     ports:
@@ -52,6 +62,11 @@ services:
         limits:
           cpus: 0.5
           memory: 512M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"
     environment:
       ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
     ports:
@@ -77,6 +92,11 @@ services:
         limits:
           cpus: 0.25
           memory: 128M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"
     volumes:
       - ./auditbeat/auditbeat.yml:/usr/share/auditbeat/auditbeat.yml:ro
     networks:
@@ -98,6 +118,11 @@ services:
         limits:
           cpus: 0.25
           memory: 128M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"
     volumes:
       - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
@@ -121,6 +146,11 @@ services:
         limits:
           cpus: 0.25
           memory: 128M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"
     volumes:
       - ./heartbeat/heartbeat.yml:/usr/share/heartbeat/heartbeat.yml:ro
     networks:
@@ -142,6 +172,11 @@ services:
         limits:
           cpus: 0.25
           memory: 128M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"
     volumes:
       - ./metricbeat/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
@@ -169,6 +204,11 @@ services:
         limits:
           cpus: 0.25
           memory: 128M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"
     volumes:
       - ./packetbeat/packetbeat.yml:/usr/share/packetbeat/packetbeat.yml:ro
     network_mode: host
