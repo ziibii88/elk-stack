@@ -40,7 +40,7 @@ output.elasticsearch:
 setup.ilm:
   enabled: true
   rollover_alias: "filebeat-%{[agent.version]}-stack"
-  pattern: "%{now/d}-000001"
+  pattern: "{now/d}-000001"
 
 setup.kibana:
   host: "kibana:5601"
