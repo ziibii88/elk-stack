@@ -39,5 +39,3 @@ setup.ilm:
 
 setup.kibana:
   host: "kibana:5601"
-
-setup.dashboards.enabled: true
