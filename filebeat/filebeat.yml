@@ -10,24 +10,24 @@ filebeat.autodiscover:
 
 filebeat.modules:
   - module: system
-      syslog:
-        enabled: true
-        var.paths: [ "/hostfs/var/log/syslog.log*" ]
-      auth:
-        enabled: true
-        var.paths: [ "/hostfs/var/log/auth.log*" ]
+    syslog:
+      enabled: true
+      var.paths: [ "/hostfs/var/log/syslog.log*" ]
+    auth:
+      enabled: true
+      var.paths: [ "/hostfs/var/log/auth.log*" ]
   - module: iptables
     log:
       enabled: true
       var.input: "file"
       var.paths: ["/hostfs/var/log/ufw.log*"]
   - module: nginx
-      access:
-        enabled: true
-        var.paths: [ "/hostfs/var/log/nginx/access.log*" ]
-      error:
-        enabled: true
-        var.paths: [ "/hostfs/var/log/nginx/error.log*" ]
+    access:
+      enabled: true
+      var.paths: [ "/hostfs/var/log/nginx/access.log*" ]
+    error:
+      enabled: true
+      var.paths: [ "/hostfs/var/log/nginx/error.log*" ]
 
 processors:
 - add_cloud_metadata: ~
