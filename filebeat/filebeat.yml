@@ -18,14 +18,13 @@ filebeat.modules:
 processors:
 - add_cloud_metadata: ~
 
-#output.elasticsearch:
-#  hosts: '${ELASTICSEARCH_HOSTS:elasticsearch:9200}'
-#  username: '${ELASTICSEARCH_USERNAME:}'
-#  password: '${ELASTICSEARCH_PASSWORD:}'
+output.elasticsearch:
+  hosts: '${ELASTICSEARCH_HOSTS:elasticsearch:9200}'
+  username: '${ELASTICSEARCH_USERNAME:}'
+  password: '${ELASTICSEARCH_PASSWORD:}'
 
-output.logstash:
-  enabled: true
-  hosts: ["logstash:5044"]
+#output.logstash:
+#  hosts: ["logstash:5044"]
 
 setup.kibana:
   host: "kibana:5601"
