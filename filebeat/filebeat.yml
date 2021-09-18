@@ -11,7 +11,7 @@ filebeat.autodiscover:
 filebeat.modules:
   - module: iptables
     log:
-      enabled: true
+      enabled: false  # moved to logstash pipeline
       var.input: "file"
       var.paths: ["/var/log/ufw.log"]
 
