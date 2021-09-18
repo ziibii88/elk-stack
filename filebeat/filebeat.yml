@@ -37,8 +37,12 @@ output.elasticsearch:
   username: '${ELASTICSEARCH_USERNAME:}'
   password: '${ELASTICSEARCH_PASSWORD:}'
 
-#output.logstash:
-#  hosts: ["logstash:5044"]
+setup.ilm:
+  enabled: true
+  rollover_alias: "filebeat-%{[agent.version]}-stack"
+  pattern: "%{now/d}-000001"
 
 setup.kibana:
   host: "kibana:5601"
+
+setup.dashboards.enabled: true
