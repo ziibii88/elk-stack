@@ -16,7 +16,7 @@ services:
       resources:
         limits:
           cpus: 2
-          memory: 2G
+          memory: 1536M
     logging:
       driver: "json-file"
       options:
@@ -39,7 +39,7 @@ services:
       resources:
         limits:
           cpus: 1
-          memory: 1G
+          memory: 768M
     logging:
       driver: "json-file"
       options:
@@ -213,7 +213,7 @@ services:
       resources:
         limits:
           cpus: 0.25
-          memory: 128M
+          memory: 256M
     logging:
       driver: "json-file"
       options:

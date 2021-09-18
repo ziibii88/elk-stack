@@ -7,9 +7,11 @@ heartbeat.monitors:
 - type: http
   schedule: '@every 5s'
   urls:
-    - http://elasticsearch:9200
-    - http://kibana:5601
-    - http://logstash:9600
+    - http://taxing.systems
+    - http://mail.taxing.systems
+    - http://elastic.taxing.systems
+    - http://kibana.taxing.systems
+    - http://stack.taxing.systems:9600
 
 - type: icmp
   schedule: '@every 5s'
