@@ -12,11 +12,6 @@ services:
       memlock:
         soft: -1
         hard: -1
-    deploy:
-      resources:
-        limits:
-          cpus: 2
-          memory: 1536M
     logging:
       driver: "json-file"
       options:
@@ -35,11 +30,6 @@ services:
     image: docker.elastic.co/logstash/logstash:7.14.1
     container_name: logstash
     hostname: logstash
-    deploy:
-      resources:
-        limits:
-          cpus: 1
-          memory: 768M
     logging:
       driver: "json-file"
       options:
@@ -52,32 +42,23 @@ services:
       - "9600:9600"
     networks:
       - elastic_net
-    depends_on:
-      - elasticsearch
     restart: unless-stopped
 
   kibana:
     image: docker.elastic.co/kibana/kibana:7.14.1
     container_name: kibana
     hostname: kibana
-    deploy:
-      resources:
-        limits:
-          cpus: 0.5
-          memory: 512M
     logging:
       driver: "json-file"
       options:
         max-size: "20m"
         max-file: "5"
     environment:
-      ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
+      ELASTICSEARCH_HOSTS: '["http://elastic.taxing.systems:9200"]'
     ports:
       - "5601:5601"
     networks:
       - elastic_net
-    depends_on:
-      - elasticsearch
     restart: unless-stopped
 
   auditbeat:
@@ -91,11 +72,6 @@ services:
     command: -e --strict.perms=false
     user: root
     pid: host
-    deploy:
-      resources:
-        limits:
-          cpus: 0.25
-          memory: 128M
     logging:
       driver: "json-file"
       options:
@@ -105,10 +81,6 @@ services:
       - ./auditbeat/auditbeat.yml:/usr/share/auditbeat/auditbeat.yml:ro
     networks:
       - elastic_net
-    depends_on:
-      - elasticsearch
-      - logstash
-      - kibana
     restart: unless-stopped
 
   filebeat:
@@ -118,11 +90,6 @@ services:
 #    command: -e --strict.perms=false -E setup.kibana=kibana:5601 -E output.elasticsearch.hosts=["elasticsearch:9200"]
     command: -e --strict.perms=false
     user: root
-    deploy:
-      resources:
-        limits:
-          cpus: 0.5
-          memory: 256M
     logging:
       driver: "json-file"
       options:
@@ -135,10 +102,6 @@ services:
       - /var/log:/hostfs/var/log:ro
     networks:
       - elastic_net
-    depends_on:
-      - elasticsearch
-      - logstash
-      - kibana
     restart: unless-stopped
 
   heartbeat:
@@ -148,11 +111,6 @@ services:
 #    command: -e --strict.perms=false -E setup.kibana=kibana:5601 -E output.elasticsearch.hosts=["elasticsearch:9200"]
     command: -e --strict.perms=false
     user: root
-    deploy:
-      resources:
-        limits:
-          cpus: 0.25
-          memory: 128M
     logging:
       driver: "json-file"
       options:
@@ -163,10 +121,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
       - elastic_net
-    depends_on:
-      - elasticsearch
-      - logstash
-      - kibana
     restart: unless-stopped
 
   metricbeat:
@@ -176,11 +130,6 @@ services:
 #    command: -e --strict.perms=false -E setup.kibana=kibana:5601 -E output.elasticsearch.hosts=["elasticsearch:9200"]
     command: -e --strict.perms=false
     user: root
-    deploy:
-      resources:
-        limits:
-          cpus: 0.25
-          memory: 128M
     logging:
       driver: "json-file"
       options:
@@ -194,10 +143,6 @@ services:
       - /:/hostfs:ro
     networks:
       - elastic_net
-    depends_on:
-      - elasticsearch
-      - logstash
-      - kibana
     restart: unless-stopped
 
   packetbeat:
@@ -209,11 +154,6 @@ services:
     #    command: -e --strict.perms=false -E setup.kibana=localhost:5601 -E output.elasticsearch.hosts=["localhost:9200"]
     command: -e --strict.perms=false
     user: packetbeat
-    deploy:
-      resources:
-        limits:
-          cpus: 0.25
-          memory: 256M
     logging:
       driver: "json-file"
       options:
@@ -222,10 +162,6 @@ services:
     volumes:
       - ./packetbeat/packetbeat.yml:/usr/share/packetbeat/packetbeat.yml:ro
     network_mode: host
-    depends_on:
-      - elasticsearch
-      - logstash
-      - kibana
     restart: unless-stopped
 
 volumes:

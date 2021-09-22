@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:7.14.1
+    container_name: filebeat
+    hostname: filebeat
+#    command: -e --strict.perms=false -E setup.kibana=kibana:5601 -E output.elasticsearch.hosts=["elasticsearch:9200"]
+    command: -e --strict.perms=false
+    user: root
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"
+    volumes:
+      - ./filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /var/log:/hostfs/var/log:ro
+    networks:
+      - elastic_net
+    restart: unless-stopped
+
+networks:
+  elastic_net:
+    driver: bridge

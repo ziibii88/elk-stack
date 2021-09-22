@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.14.1
+    container_name: logstash
+    hostname: logstash
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"
+    volumes:
+      - ./pipeline:/usr/share/logstash/pipeline
+    ports:
+      - "5044:5044"
+      - "9600:9600"
+    networks:
+      - elastic_net
+    restart: unless-stopped
+
+networks:
+  elastic_net:
+    driver: bridge

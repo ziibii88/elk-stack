@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  heartbeat:
+    image: docker.elastic.co/beats/heartbeat:7.14.1
+    container_name: heartbeat
+    hostname: heartbeat
+#    command: -e --strict.perms=false -E setup.kibana=kibana:5601 -E output.elasticsearch.hosts=["elasticsearch:9200"]
+    command: -e --strict.perms=false
+    user: root
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"
+    volumes:
+      - ./heartbeat.yml:/usr/share/heartbeat/heartbeat.yml:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - elastic_net
+    restart: unless-stopped
+
+networks:
+  elastic_net:
+    driver: bridge

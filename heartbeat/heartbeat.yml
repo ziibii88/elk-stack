@@ -9,8 +9,8 @@ heartbeat.monitors:
   urls:
     - http://taxing.systems
     - http://mail.taxing.systems
-    - http://elastic.taxing.systems
     - http://kibana.taxing.systems
+    - http://elastic.taxing.systems:9200
     - http://stack.taxing.systems:9600
 
 - type: icmp
@@ -23,12 +23,13 @@ heartbeat.monitors:
     - filebeat
     - heartbeat
     - metricbeat
+    - packetbeat
 
 processors:
 - add_cloud_metadata: ~
 
 output.elasticsearch:
-  hosts: '${ELASTICSEARCH_HOSTS:elasticsearch:9200}'
+  hosts: '${ELASTICSEARCH_HOSTS:elastic.taxing.systems:9200}'
   username: '${ELASTICSEARCH_USERNAME:}'
   password: '${ELASTICSEARCH_PASSWORD:}'
 
@@ -38,4 +39,4 @@ setup.ilm:
   pattern: "{now/d}-000001"
 
 setup.kibana:
-  host: "kibana:5601"
+  host: "stack.taxing.systems:5601"

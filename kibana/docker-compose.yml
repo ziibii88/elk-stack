@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.14.1
+    container_name: kibana
+    hostname: kibana
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"
+    environment:
+      ELASTICSEARCH_HOSTS: '["http://elastic.taxing.systems:9200"]'
+    ports:
+      - "5601:5601"
+    networks:
+      - elastic_net
+    restart: unless-stopped
+
+networks:
+  elastic_net:
+    driver: bridge

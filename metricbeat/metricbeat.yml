@@ -28,7 +28,7 @@ processors:
   - add_cloud_metadata: ~
 
 output.elasticsearch:
-  hosts: '${ELASTICSEARCH_HOSTS:elasticsearch:9200}'
+  hosts: '${ELASTICSEARCH_HOSTS:elastic.taxing.systems:9200}'
   username: '${ELASTICSEARCH_USERNAME:}'
   password: '${ELASTICSEARCH_PASSWORD:}'
 
@@ -38,6 +38,6 @@ setup.ilm:
   pattern: "{now/d}-000001"
 
 setup.kibana:
-  host: "kibana:5601"
+  host: "stack.taxing.systems:5601"
 
 setup.dashboards.enabled: true

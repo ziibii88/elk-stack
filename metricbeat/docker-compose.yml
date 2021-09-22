@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  metricbeat:
+    image: docker.elastic.co/beats/metricbeat:7.14.1
+    container_name: metricbeat
+    hostname: metricbeat
+#    command: -e --strict.perms=false -E setup.kibana=kibana:5601 -E output.elasticsearch.hosts=["elasticsearch:9200"]
+    command: -e --strict.perms=false
+    user: root
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"
+    volumes:
+      - ./metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
+      - /proc:/hostfs/proc:ro
+      - /:/hostfs:ro
+    networks:
+      - elastic_net
+    restart: unless-stopped
+
+networks:
+  elastic_net:
+    driver: bridge

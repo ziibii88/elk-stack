@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  auditbeat:
+    image: docker.elastic.co/beats/auditbeat:7.14.1
+    container_name: auditbeat
+    hostname: auditbeat
+    cap_add:
+      - "AUDIT_CONTROL"
+      - "AUDIT_READ"
+#    command: -e --strict.perms=false -E setup.kibana=kibana:5601 -E output.elasticsearch.hosts=["elasticsearch:9200"]
+    command: -e --strict.perms=false
+    user: root
+    pid: host
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"
+    volumes:
+      - ./auditbeat.yml:/usr/share/auditbeat/auditbeat.yml:ro
+    networks:
+      - elastic_net
+    restart: unless-stopped
+
+networks:
+  elastic_net:
+    driver: bridge
