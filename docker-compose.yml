@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.14.1
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.1
     container_name: elasticsearch
     hostname: elasticsearch
     environment:
@@ -27,7 +27,7 @@ services:
     restart: unless-stopped
 
   logstash:
-    image: docker.elastic.co/logstash/logstash:7.14.1
+    image: docker.elastic.co/logstash/logstash:7.15.1
     container_name: logstash
     hostname: logstash
     logging:
@@ -45,7 +45,7 @@ services:
     restart: unless-stopped
 
   kibana:
-    image: docker.elastic.co/kibana/kibana:7.14.1
+    image: docker.elastic.co/kibana/kibana:7.15.1
     container_name: kibana
     hostname: kibana
     logging:
@@ -62,7 +62,7 @@ services:
     restart: unless-stopped
 
   auditbeat:
-    image: docker.elastic.co/beats/auditbeat:7.14.1
+    image: docker.elastic.co/beats/auditbeat:7.15.1
     container_name: auditbeat
     hostname: auditbeat
     cap_add:
@@ -84,7 +84,7 @@ services:
     restart: unless-stopped
 
   filebeat:
-    image: docker.elastic.co/beats/filebeat:7.14.1
+    image: docker.elastic.co/beats/filebeat:7.15.1
     container_name: filebeat
     hostname: filebeat
 #    command: -e --strict.perms=false -E setup.kibana=kibana:5601 -E output.elasticsearch.hosts=["elasticsearch:9200"]
@@ -105,7 +105,7 @@ services:
     restart: unless-stopped
 
   heartbeat:
-    image: docker.elastic.co/beats/heartbeat:7.14.1
+    image: docker.elastic.co/beats/heartbeat:7.15.1
     container_name: heartbeat
     hostname: heartbeat
 #    command: -e --strict.perms=false -E setup.kibana=kibana:5601 -E output.elasticsearch.hosts=["elasticsearch:9200"]
@@ -124,7 +124,7 @@ services:
     restart: unless-stopped
 
   metricbeat:
-    image: docker.elastic.co/beats/metricbeat:7.14.1
+    image: docker.elastic.co/beats/metricbeat:7.15.1
     container_name: metricbeat
     hostname: metricbeat
 #    command: -e --strict.perms=false -E setup.kibana=kibana:5601 -E output.elasticsearch.hosts=["elasticsearch:9200"]
@@ -146,7 +146,7 @@ services:
     restart: unless-stopped
 
   packetbeat:
-    image: docker.elastic.co/beats/packetbeat:7.14.1
+    image: docker.elastic.co/beats/packetbeat:7.15.1
     container_name: packetbeat
     hostname: packetbeat
     cap_add:

@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   auditbeat:
-    image: docker.elastic.co/beats/auditbeat:7.14.1
+    image: docker.elastic.co/beats/auditbeat:7.15.1
     container_name: auditbeat
     hostname: auditbeat
     cap_add:

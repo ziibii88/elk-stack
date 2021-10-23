@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   filebeat:
-    image: docker.elastic.co/beats/filebeat:7.14.1
+    image: docker.elastic.co/beats/filebeat:7.15.1
     container_name: filebeat
     hostname: filebeat
 #    command: -e --strict.perms=false -E setup.kibana=kibana:5601 -E output.elasticsearch.hosts=["elasticsearch:9200"]
