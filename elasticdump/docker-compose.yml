@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  elasticdump:
+    image: elasticdump/elasticsearch-dump
+    container_name: elasticdump
+    hostname: elasticdump
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"
+    volumes:
+      - ./dump:/dump
+    networks:
+      - elastic_net
+    restart: unless-stopped
+
+networks:
+  elastic_net:
+    driver: bridge
